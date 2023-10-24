@@ -90,10 +90,10 @@ userSchema.statics.findByToken = function (token, cbfn) {
   jwt.verify(token, "secretToken", function (err, decoded) {
     // 유저 아이디를 이용해서 유저를 찾고,
     // 클라이언트에서 가져온 토큰과 DB에 보관된 토큰이 일치하는지 확인.
-    user.findOne({ _id: decoded, token: token }, function (err, userInfo) {
-      if (err) return cbfn(err);
-      cbfn(null, userInfo);
-    });
+    user
+      .findOne({ _id: decoded, token: token })
+      .then((user) => cbfn(null, user))
+      .catch((err) => cbfn(err));
   });
 };
 

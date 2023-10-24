@@ -94,6 +94,16 @@ app.get("/api/users/auth", auth, (req, res) => {
   });
 });
 
+// Logout
+app.get("/api/users/logout", auth, (req, res) => {
+  // 토큰을 삭제하여 간단하게 로그아웃을 시킬 수 있다.
+  // 토큰이 없다면 신원확인이 불가능하여 로그인이 풀리기 때문.
+
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" })
+    .then(() => res.status(200).send({ success: true }))
+    .catch((err) => res.json({ success: false, err }));
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
