@@ -19,8 +19,8 @@ function LandingPage() {
       }}
     >
       <h2>시작 페이지</h2>
-      <Link to={"/api/users/login"}>로그인페이지</Link>
-      <Link to={"/api/users/register"}>회원가입</Link>
+      <Link to={"/login"}>로그인페이지</Link>
+      <Link to={"/register"}>회원가입</Link>
     </div>
   );
 }

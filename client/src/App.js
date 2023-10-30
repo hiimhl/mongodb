@@ -8,8 +8,8 @@ function App() {
     <HashRouter>
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/api/users/login" element={<LoginPage />} />
-        <Route exact path="/api/users/register" element={<RegisterPage />} />
+        <Route exact path="/login" element={<LoginPage />} />
+        <Route exact path="/register" element={<RegisterPage />} />
       </Routes>
     </HashRouter>
   );

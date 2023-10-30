@@ -11,23 +11,46 @@ import { Button, Checkbox, Form, Input } from "antd";
 
 const MyForm = ({ onSubmit, isLogin }) => {
   const [userData, setUserData] = useState({
+    name: "",
     email: "",
     password: "",
-    // name: "",
-    // lastName:""
+    confirm: "",
   });
-  // const [loginForm, setLoginForm] = useState(isLogin);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onInputHandler = (e) => {
     const { value, name } = e.currentTarget;
 
     setUserData((data) => ({ ...data, [name]: value }));
+
+    if (userData.password != userData.confirm) {
+      setErrorMessage("비밀번호가 일치하지 않습니다");
+    } else {
+      setErrorMessage("");
+    }
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    onSubmit(userData);
-    console.log(userData);
+
+    let body = {};
+    if (isLogin) {
+      body = {
+        email: userData.email,
+        password: userData.password,
+      };
+    } else {
+      if (userData.password === userData.confirm) {
+        body = {
+          name: userData.name,
+          email: userData.email,
+          password: userData.password,
+        };
+      } else {
+        return;
+      }
+    }
+    onSubmit(body);
   };
 
   return (
@@ -95,6 +118,28 @@ const MyForm = ({ onSubmit, isLogin }) => {
           onChange={onInputHandler}
         />
       </Form.Item>
+      {!isLogin && (
+        <>
+          <Form.Item
+            label="비밀번호 확인"
+            name="confirm"
+            type="confirm"
+            rules={[
+              {
+                required: true,
+                message: "비밀번호가 일치하지 않습니다!",
+              },
+            ]}
+          >
+            <Input
+              value={userData.confirm}
+              name="confirm"
+              onChange={onInputHandler}
+            />
+          </Form.Item>
+          <p>{errorMessage}</p>
+        </>
+      )}
       {/* 
     <Form.Item
       name="remember"
