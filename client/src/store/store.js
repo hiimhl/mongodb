@@ -1,7 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { dataSlice } from "./createSlice";
 
-export default configureStore({
+import logger from "redux-logger";
+
+const store = configureStore({
   reducer: dataSlice,
-  //middleware:[...middlewares]
+  //middleware: [...getDefaultMiddleware()],
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
+export default store;

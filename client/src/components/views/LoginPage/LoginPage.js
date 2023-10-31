@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import MyForm from "../../UI/MyForm";
 import { userLogin } from "../../../store/thunk";
+import GoBtn from "../../UI/GoBtn";
 
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const onSubmit = (data) => {
     dispatch(userLogin(data));
     navigate("/");
@@ -24,7 +26,8 @@ function LoginPage() {
       }}
     >
       <div>
-        <Link to={"/"}>홈</Link>
+        <GoBtn title={"홈"} goTo={"/"} />
+        <GoBtn title={"회원가입"} goTo={"/register"} />
       </div>
       <MyForm onSubmit={onSubmit} isLogin={true} />
     </div>

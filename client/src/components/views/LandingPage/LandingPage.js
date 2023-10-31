@@ -1,11 +1,23 @@
-import React, { useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import GoBtn from "../../UI/GoBtn";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout } from "../../../store/createSlice";
 
 function LandingPage() {
-  useEffect(() => {
-    // axios.get("/api/hello").then((res) => console.log(res));
-  }, []);
+  const isLogin = useSelector((state) => state.reducer.loggedIn);
+  const dispatch = useDispatch();
+  console.log(isLogin);
+  const onLogoutHandler = () => {
+    axios.get("/api/users/logout").then((rep) => {
+      if (rep.data.success) {
+        alert("로그아웃 성공");
+        dispatch(userLogout());
+      } else {
+        alert("로그아웃 실패");
+      }
+    });
+  };
 
   return (
     <div
@@ -19,8 +31,11 @@ function LandingPage() {
       }}
     >
       <h2>시작 페이지</h2>
-      <Link to={"/login"}>로그인페이지</Link>
-      <Link to={"/register"}>회원가입</Link>
+      {isLogin ? (
+        <button onClick={onLogoutHandler}>로그아웃</button>
+      ) : (
+        <GoBtn title={"로그인"} goTo={"/login"} />
+      )}
     </div>
   );
 }
