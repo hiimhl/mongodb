@@ -1,6 +1,6 @@
 // Slice 파일
 import { createSlice } from "@reduxjs/toolkit";
-import { userLogin, userRegister } from "./thunk";
+import { userAuth, userLogin, userRegister } from "./thunk";
 
 export const dataSlice = createSlice({
   name: "data",
@@ -28,6 +28,10 @@ export const dataSlice = createSlice({
         state.loggedIn = false;
       })
       .addCase(userRegister.fulfilled, (state, action) => {
+        state.loading = "succeeded";
+        state.data = action.payload;
+      })
+      .addCase(userAuth.fulfilled, (state, action) => {
         state.loading = "succeeded";
         state.data = action.payload;
       });

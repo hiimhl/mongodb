@@ -24,3 +24,14 @@ export const userRegister = createAsyncThunk(
     }
   }
 );
+export const userAuth = createAsyncThunk(
+  "data/userData",
+  async (req, thunkAPI) => {
+    try {
+      const response = await axios.get("/api/users/auth");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);

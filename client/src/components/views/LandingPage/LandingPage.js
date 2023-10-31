@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import GoBtn from "../../UI/GoBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../../store/createSlice";
@@ -7,7 +7,7 @@ import { userLogout } from "../../../store/createSlice";
 function LandingPage() {
   const isLogin = useSelector((state) => state.reducer.loggedIn);
   const dispatch = useDispatch();
-  console.log(isLogin);
+
   const onLogoutHandler = () => {
     axios.get("/api/users/logout").then((rep) => {
       if (rep.data.success) {
